@@ -154,6 +154,8 @@ if ($verify.ExitCode -ne 0) { Fail '证书自检失败：口令与 p12 不匹配
 Step '从 .env.example 生成 .env'
 $template = Get-Content (Join-Path $repo '.env.example') -Raw -Encoding UTF8
 $envText = $template -replace '(?m)^server\.ssl\.key-store-password=.*$', "server.ssl.key-store-password=$storePass"
+$envText = $envText -replace '(?m)^APP_ADMIN_PASSWORD=$', "# [部署前必填] 空库首次启动前必须在这里填密码；留空 = 不会创建管理员，谁都登不进去。`nAPP_ADMIN_PASSWORD="
+$envText = $envText -replace '(?m)^DB_PASSWORD=$', "# [部署前必填] 填成 MySQL 里该账号的密码。`nDB_PASSWORD="
 if ($envText -notmatch [regex]::Escape($storePass)) { Fail '.env 生成失败：未能写入 keystore 口令' }
 $envPath = Join-Path $out '.env'
 [System.IO.File]::WriteAllText($envPath, $envText, (New-Object System.Text.UTF8Encoding($false)))
@@ -203,3 +205,10 @@ Write-Host '  2) 把 .env 里的 DB_PASSWORD 填成该账号的密码'
 Write-Host '  3) 把 .env 里的 APP_ADMIN_PASSWORD 填成 6-18 位、含字母和数字、只用 A-Za-z0-9_@ 的初始密码'
 Write-Host '  4) 整个目录一起拷走（含 .https），双击 启动系统.cmd'
 Write-Host '  5) 首次登录后立刻改密码；SMTP 配置页初始口令 a018779 也要改'
+
+if ($envText -match '(?m)^APP_ADMIN_PASSWORD=\s*$') {
+    Write-Host ""
+    Write-Host '⚠ 这份包里的 APP_ADMIN_PASSWORD 还是空的：' -ForegroundColor Yellow
+    Write-Host '  空库第一次启动不会创建任何管理员，登录页会一直提示“用户名或密码不正确”。' -ForegroundColor Yellow
+    Write-Host '  交付前请让接收方先填好该值再启动；已在别处建过号的库则不受影响（可用 重置管理员密码.ps1 改密码）。' -ForegroundColor Yellow
+}
