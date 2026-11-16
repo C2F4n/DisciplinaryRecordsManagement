@@ -1,5 +1,10 @@
 package org.example.disciplinaryrecordsmanagement.service;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.example.disciplinaryrecordsmanagement.dto.CounselorDto.Create;
 import org.example.disciplinaryrecordsmanagement.dto.CounselorDto.Option;
 import org.example.disciplinaryrecordsmanagement.exception.BusinessException;
@@ -10,12 +15,10 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.*;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.CLASS_COUNSELOR_COUNT;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.CLASS_COUNSELOR_DUPLICATE;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.COUNSELOR_EXISTS;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.COUNSELOR_REQUIRED;
 import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_CLASS_COUNSELORS;
 import static org.springframework.util.StringUtils.hasText;
 

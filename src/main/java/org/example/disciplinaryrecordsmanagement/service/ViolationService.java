@@ -1,9 +1,29 @@
 package org.example.disciplinaryrecordsmanagement.service;
 
+import java.time.Clock;
+import java.time.DayOfWeek;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
 import org.example.disciplinaryrecordsmanagement.config.BusinessPolicy;
 import org.example.disciplinaryrecordsmanagement.config.RetentionPolicy;
 import org.example.disciplinaryrecordsmanagement.dto.AccountDto.Candidate;
-import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.*;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.BatchResult;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Correction;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Create;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Edit;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Entry;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Filter;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Item;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Metadata;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Resolve;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Review;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.ReviewAction;
 import org.example.disciplinaryrecordsmanagement.dto.WorkflowDto.Kind;
 import org.example.disciplinaryrecordsmanagement.exception.BusinessException;
 import org.example.disciplinaryrecordsmanagement.mapper.AccountMapper;
@@ -11,23 +31,40 @@ import org.example.disciplinaryrecordsmanagement.mapper.ViolationMapper;
 import org.example.disciplinaryrecordsmanagement.model.AuditEvent;
 import org.example.disciplinaryrecordsmanagement.model.AuditEvent.Target;
 import org.example.disciplinaryrecordsmanagement.model.InspectionLabels;
-import org.example.disciplinaryrecordsmanagement.model.ViolationStatus;
 import org.example.disciplinaryrecordsmanagement.model.Viewer;
+import org.example.disciplinaryrecordsmanagement.model.ViolationStatus;
 import org.example.disciplinaryrecordsmanagement.result.PageResult;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Clock;
-import java.time.DayOfWeek;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.*;
-
-import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.*;
-import static org.example.disciplinaryrecordsmanagement.model.NotificationType.*;
-import static org.example.disciplinaryrecordsmanagement.model.Role.*;
-import static org.example.disciplinaryrecordsmanagement.model.ViolationStatus.*;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.ARCHIVED_CORRECTION;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.CORRECTION_DATE_AFTER_RETURN;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.CORRECTION_NO_CHANGE;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.CORRECTION_OUTSIDE_RETENTION;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.CORRECTION_REOPEN_REQUIRED;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.CORRECTION_STATUS_INVALID;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.DUPLICATE_REVIEW_ITEMS;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.INVALID_DATE_RANGE;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.INVALID_OCCURRENCE_DATE;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.INVALID_VIOLATION_TYPE;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.NO_BOUND_STUDENT;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.OUTSIDE_EDIT_WINDOW;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.PENDING_EXPIRED;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.REJECTION_REASON_REQUIRED;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.STALE_RECORD;
+import static org.example.disciplinaryrecordsmanagement.model.NotificationType.VIOLATION_APPEALED;
+import static org.example.disciplinaryrecordsmanagement.model.NotificationType.VIOLATION_APPROVED;
+import static org.example.disciplinaryrecordsmanagement.model.NotificationType.VIOLATION_CORRECTED;
+import static org.example.disciplinaryrecordsmanagement.model.NotificationType.VIOLATION_HANDED_BACK;
+import static org.example.disciplinaryrecordsmanagement.model.NotificationType.VIOLATION_REGISTERED;
+import static org.example.disciplinaryrecordsmanagement.model.NotificationType.VIOLATION_REJECTED;
+import static org.example.disciplinaryrecordsmanagement.model.Role.DEPARTMENT_HEAD;
+import static org.example.disciplinaryrecordsmanagement.model.Role.OFFICER;
+import static org.example.disciplinaryrecordsmanagement.model.ViolationStatus.APPEALED;
+import static org.example.disciplinaryrecordsmanagement.model.ViolationStatus.APPROVED;
+import static org.example.disciplinaryrecordsmanagement.model.ViolationStatus.HANDED_BACK;
+import static org.example.disciplinaryrecordsmanagement.model.ViolationStatus.PENDING;
+import static org.example.disciplinaryrecordsmanagement.model.ViolationStatus.RECORDED;
 
 @Service
 public class ViolationService {

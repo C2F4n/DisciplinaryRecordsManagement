@@ -1,8 +1,11 @@
 package org.example.disciplinaryrecordsmanagement.config;
 
+import java.nio.charset.StandardCharsets;
+
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
+
 import org.example.disciplinaryrecordsmanagement.dto.SmtpSettingsDto.Transport;
 import org.example.disciplinaryrecordsmanagement.mapper.SmtpSettingsMapper;
 import org.example.disciplinaryrecordsmanagement.mapper.SmtpSettingsMapper.Saved;
@@ -14,8 +17,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
-
-import java.nio.charset.StandardCharsets;
 
 import static org.example.disciplinaryrecordsmanagement.constant.SmtpSettingsConstants.SMTP_SETTINGS_ID;
 

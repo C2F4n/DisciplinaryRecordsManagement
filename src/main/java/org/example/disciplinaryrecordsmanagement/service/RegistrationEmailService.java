@@ -1,5 +1,12 @@
 package org.example.disciplinaryrecordsmanagement.service;
 
+import java.security.SecureRandom;
+import java.time.Clock;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.util.Locale;
+import java.util.UUID;
+
 import org.example.disciplinaryrecordsmanagement.dto.AccountDto.EmailCodeSent;
 import org.example.disciplinaryrecordsmanagement.dto.AccountDto.RegistrationIdentity;
 import org.example.disciplinaryrecordsmanagement.exception.BusinessException;
@@ -12,13 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
-
-import java.security.SecureRandom;
-import java.time.Clock;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.util.Locale;
-import java.util.UUID;
 
 import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.REGISTRATION_MAIL_COOLDOWN;
 import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.REGISTRATION_MISMATCH;

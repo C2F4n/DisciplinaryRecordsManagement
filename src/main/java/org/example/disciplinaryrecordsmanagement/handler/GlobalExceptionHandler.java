@@ -1,9 +1,12 @@
 package org.example.disciplinaryrecordsmanagement.handler;
 
+import java.util.Arrays;
+
+import jakarta.validation.ConstraintViolationException;
+
 import org.example.disciplinaryrecordsmanagement.exception.BusinessException;
 import org.example.disciplinaryrecordsmanagement.exception.ErrorCode;
 import org.example.disciplinaryrecordsmanagement.result.Result;
-import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
@@ -14,8 +17,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
-import java.util.Arrays;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {

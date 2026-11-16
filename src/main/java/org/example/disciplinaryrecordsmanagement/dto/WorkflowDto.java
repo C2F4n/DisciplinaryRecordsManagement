@@ -1,12 +1,17 @@
 package org.example.disciplinaryrecordsmanagement.dto;
 
-import jakarta.validation.constraints.*;
+import java.util.List;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
+
 import org.example.disciplinaryrecordsmanagement.dto.AccountDto.Department;
 import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Resolution;
 
-import java.util.List;
-
-import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.*;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_DEPARTMENT_CODE_LENGTH;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_WORKFLOW_LABEL_LENGTH;
 
 public final class WorkflowDto {
     private WorkflowDto() {}

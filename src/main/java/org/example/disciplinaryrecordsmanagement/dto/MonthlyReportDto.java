@@ -1,9 +1,9 @@
 package org.example.disciplinaryrecordsmanagement.dto;
 
+import java.time.LocalDate;
+
 import org.example.disciplinaryrecordsmanagement.model.InspectionLabels;
 import org.example.disciplinaryrecordsmanagement.result.PageResult;
-
-import java.time.LocalDate;
 
 public final class MonthlyReportDto {
     private MonthlyReportDto() {}

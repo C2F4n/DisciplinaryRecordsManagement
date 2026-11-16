@@ -3,6 +3,7 @@ package org.example.disciplinaryrecordsmanagement.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
 import org.example.disciplinaryrecordsmanagement.model.PermissionRequestStatus;
 import org.example.disciplinaryrecordsmanagement.model.Role;
 

@@ -1,13 +1,17 @@
 package org.example.disciplinaryrecordsmanagement.mapper;
 
-import org.example.disciplinaryrecordsmanagement.dto.WorkbookDownload;
-import org.example.disciplinaryrecordsmanagement.dto.MonthlyReportDto.Item;
-import org.example.disciplinaryrecordsmanagement.dto.MonthlyReportDto.Summary;
-import org.example.disciplinaryrecordsmanagement.model.ViolationStatus;
-import org.apache.ibatis.annotations.*;
-
 import java.time.LocalDate;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+import org.example.disciplinaryrecordsmanagement.dto.MonthlyReportDto.Item;
+import org.example.disciplinaryrecordsmanagement.dto.MonthlyReportDto.Summary;
+import org.example.disciplinaryrecordsmanagement.dto.WorkbookDownload;
+import org.example.disciplinaryrecordsmanagement.model.ViolationStatus;
 
 @Mapper
 public interface MonthlyReportMapper {

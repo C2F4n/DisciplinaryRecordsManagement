@@ -1,9 +1,20 @@
 package org.example.disciplinaryrecordsmanagement.dto;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 
-import static org.example.disciplinaryrecordsmanagement.constant.SmtpSettingsConstants.*;
-import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.*;
+import static org.example.disciplinaryrecordsmanagement.constant.SmtpSettingsConstants.MAX_HOST_LENGTH;
+import static org.example.disciplinaryrecordsmanagement.constant.SmtpSettingsConstants.MAX_PORT;
+import static org.example.disciplinaryrecordsmanagement.constant.SmtpSettingsConstants.MAX_SMTP_PASSWORD_LENGTH;
+import static org.example.disciplinaryrecordsmanagement.constant.SmtpSettingsConstants.SMTP_HOST_PATTERN;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_EMAIL_LENGTH;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_PASSWORD_LENGTH;
 
 public final class SmtpSettingsDto {
     private SmtpSettingsDto() {}

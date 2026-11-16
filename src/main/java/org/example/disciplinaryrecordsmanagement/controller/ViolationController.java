@@ -1,28 +1,51 @@
 package org.example.disciplinaryrecordsmanagement.controller;
 
-import org.example.disciplinaryrecordsmanagement.dto.AccountDto.Candidate;
-import org.example.disciplinaryrecordsmanagement.dto.StatisticsDto.Period;
-import org.example.disciplinaryrecordsmanagement.dto.StatisticsDto.Summary;
-import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.*;
-import org.example.disciplinaryrecordsmanagement.result.PageResult;
-import org.example.disciplinaryrecordsmanagement.result.Result;
-import org.example.disciplinaryrecordsmanagement.service.AccountService;
-import org.example.disciplinaryrecordsmanagement.service.ViolationService;
-import org.example.disciplinaryrecordsmanagement.service.ViolationExportService;
-import org.example.disciplinaryrecordsmanagement.service.ViolationStatisticsService;
+import java.security.Principal;
+import java.util.List;
+
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-import java.util.List;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.Candidate;
+import org.example.disciplinaryrecordsmanagement.dto.StatisticsDto.Period;
+import org.example.disciplinaryrecordsmanagement.dto.StatisticsDto.Summary;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.BatchResult;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Correction;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Create;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Edit;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Entry;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Filter;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Metadata;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Resolve;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Review;
+import org.example.disciplinaryrecordsmanagement.result.PageResult;
+import org.example.disciplinaryrecordsmanagement.result.Result;
+import org.example.disciplinaryrecordsmanagement.service.AccountService;
+import org.example.disciplinaryrecordsmanagement.service.ViolationExportService;
+import org.example.disciplinaryrecordsmanagement.service.ViolationService;
+import org.example.disciplinaryrecordsmanagement.service.ViolationStatisticsService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import static org.example.disciplinaryrecordsmanagement.constant.ApiRoutes.ROOT;
-import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.*;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.DEFAULT_PAGE;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.DEFAULT_PAGE_SIZE;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.DEFAULT_STATISTICS_PERIOD;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_PAGE;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_PAGE_SIZE;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_STUDENT_LOOKUP_LENGTH;
 
 @RestController
 @RequestMapping(ROOT)

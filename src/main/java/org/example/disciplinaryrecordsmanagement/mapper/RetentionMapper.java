@@ -1,12 +1,16 @@
 package org.example.disciplinaryrecordsmanagement.mapper;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.example.disciplinaryrecordsmanagement.dto.RetentionDto.Day;
 import org.example.disciplinaryrecordsmanagement.dto.RetentionDto.Run;
 import org.example.disciplinaryrecordsmanagement.model.ViolationStatus;
-import org.apache.ibatis.annotations.*;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @Mapper
 public interface RetentionMapper {

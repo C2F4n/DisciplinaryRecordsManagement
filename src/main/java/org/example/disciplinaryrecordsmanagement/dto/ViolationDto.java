@@ -1,14 +1,27 @@
 package org.example.disciplinaryrecordsmanagement.dto;
 
-import org.example.disciplinaryrecordsmanagement.model.ViolationStatus;
-import org.example.disciplinaryrecordsmanagement.dto.WorkflowDto.Choice;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
-
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
+
+import org.example.disciplinaryrecordsmanagement.dto.WorkflowDto.Choice;
+import org.example.disciplinaryrecordsmanagement.model.ViolationStatus;
+
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_REASON_LENGTH;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_REVIEW_ITEMS;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_VIOLATION_NOTE_LENGTH;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_VIOLATION_TYPE_LENGTH;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_WORKFLOW_CODE_LENGTH;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.STUDENT_NUMBER;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.SUBMISSION_ID;
 
 public final class ViolationDto {
     private ViolationDto() {}

@@ -1,15 +1,21 @@
 package org.example.disciplinaryrecordsmanagement.model;
 
-import org.example.disciplinaryrecordsmanagement.dto.AccountDto.Grant;
-import org.example.disciplinaryrecordsmanagement.exception.BusinessException;
-
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.Grant;
+import org.example.disciplinaryrecordsmanagement.exception.BusinessException;
+
 import static org.example.disciplinaryrecordsmanagement.constant.DepartmentCodes.DISCIPLINE;
-import static org.example.disciplinaryrecordsmanagement.model.Role.*;
+import static org.example.disciplinaryrecordsmanagement.model.Role.CLASS_COMMITTEE;
+import static org.example.disciplinaryrecordsmanagement.model.Role.DEPARTMENT_HEAD;
+import static org.example.disciplinaryrecordsmanagement.model.Role.DISCIPLINE_OFFICE;
+import static org.example.disciplinaryrecordsmanagement.model.Role.OFFICER;
+import static org.example.disciplinaryrecordsmanagement.model.Role.PRESIDENT;
+import static org.example.disciplinaryrecordsmanagement.model.Role.QUALITY_HEAD;
+import static org.example.disciplinaryrecordsmanagement.model.Role.TEACHER;
 
 public record Viewer(long id, String username, String displayName, Long studentId, Long classId,
                      boolean coreAdmin, List<Grant> grants) {

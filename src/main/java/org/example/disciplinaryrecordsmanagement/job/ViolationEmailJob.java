@@ -1,6 +1,12 @@
 package org.example.disciplinaryrecordsmanagement.job;
 
+import java.time.Clock;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.util.UUID;
+
 import jakarta.mail.MessagingException;
+
 import org.example.disciplinaryrecordsmanagement.config.SmtpRuntime;
 import org.example.disciplinaryrecordsmanagement.mapper.NotificationEmailMapper;
 import org.example.disciplinaryrecordsmanagement.mapper.NotificationEmailMapper.Due;
@@ -10,12 +16,9 @@ import org.springframework.mail.MailException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.time.Clock;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.util.UUID;
-
-import static org.example.disciplinaryrecordsmanagement.mapper.NotificationEmailMapper.Status.*;
+import static org.example.disciplinaryrecordsmanagement.mapper.NotificationEmailMapper.Status.FAILED;
+import static org.example.disciplinaryrecordsmanagement.mapper.NotificationEmailMapper.Status.SENT;
+import static org.example.disciplinaryrecordsmanagement.mapper.NotificationEmailMapper.Status.SKIPPED;
 
 @Component
 class ViolationEmailJob {

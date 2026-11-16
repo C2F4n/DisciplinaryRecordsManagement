@@ -1,21 +1,30 @@
 package org.example.disciplinaryrecordsmanagement.service;
 
-import org.example.disciplinaryrecordsmanagement.dto.MonthlyReportDto.Item;
-import org.example.disciplinaryrecordsmanagement.dto.ExportTemplateDto.Kind;
-import org.example.disciplinaryrecordsmanagement.dto.ExportTemplateDto.Template;
-import org.example.disciplinaryrecordsmanagement.dto.WorkbookDownload;
-import org.example.disciplinaryrecordsmanagement.dto.WorkbookRow;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.stereotype.Component;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.example.disciplinaryrecordsmanagement.dto.ExportTemplateDto.Kind;
+import org.example.disciplinaryrecordsmanagement.dto.ExportTemplateDto.Template;
+import org.example.disciplinaryrecordsmanagement.dto.MonthlyReportDto.Item;
+import org.example.disciplinaryrecordsmanagement.dto.WorkbookDownload;
+import org.example.disciplinaryrecordsmanagement.dto.WorkbookRow;
+import org.springframework.stereotype.Component;
 
 @Component
 class ReportWorkbookWriter {

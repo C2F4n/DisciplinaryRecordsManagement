@@ -1,9 +1,9 @@
 package org.example.disciplinaryrecordsmanagement.security;
 
+import java.util.List;
+
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-
-import java.util.List;
 
 import static org.example.disciplinaryrecordsmanagement.constant.RequestConstants.LOGIN_AUTHORITY;
 

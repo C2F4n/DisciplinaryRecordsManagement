@@ -1,20 +1,36 @@
 package org.example.disciplinaryrecordsmanagement.service;
 
+import java.util.List;
+import java.util.UUID;
+
 import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Resolution;
-import org.example.disciplinaryrecordsmanagement.dto.WorkflowDto.*;
+import org.example.disciplinaryrecordsmanagement.dto.WorkflowDto.ChangeDepartment;
+import org.example.disciplinaryrecordsmanagement.dto.WorkflowDto.ChangeOption;
+import org.example.disciplinaryrecordsmanagement.dto.WorkflowDto.Choice;
+import org.example.disciplinaryrecordsmanagement.dto.WorkflowDto.Kind;
+import org.example.disciplinaryrecordsmanagement.dto.WorkflowDto.NewInspection;
+import org.example.disciplinaryrecordsmanagement.dto.WorkflowDto.Option;
+import org.example.disciplinaryrecordsmanagement.dto.WorkflowDto.Settings;
+import org.example.disciplinaryrecordsmanagement.dto.WorkflowDto.TypeAssignment;
 import org.example.disciplinaryrecordsmanagement.exception.BusinessException;
 import org.example.disciplinaryrecordsmanagement.mapper.AccountMapper;
 import org.example.disciplinaryrecordsmanagement.mapper.WorkflowMapper;
+import org.example.disciplinaryrecordsmanagement.model.AuditEvent.Marker;
+import org.example.disciplinaryrecordsmanagement.model.AuditEvent.Target;
 import org.example.disciplinaryrecordsmanagement.model.Viewer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.UUID;
-
-import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.*;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.APPEAL_OPTION_REQUIRED;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.DEPARTMENT_NOT_FOUND;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.INSPECTION_REQUIRED;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.INVALID_APPEAL_OPTION;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.INVALID_INSPECTION;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.STALE_RECORD;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.WORKFLOW_LABEL_REQUIRED;
 import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_WORKFLOW_CODE_LENGTH;
-import static org.example.disciplinaryrecordsmanagement.model.AuditEvent.*;
+import static org.example.disciplinaryrecordsmanagement.model.AuditEvent.UPDATE_TYPE_DEPARTMENT;
+import static org.example.disciplinaryrecordsmanagement.model.AuditEvent.UPDATE_WORKFLOW_OPTION;
 
 @Service
 public class WorkflowService {

@@ -1,15 +1,17 @@
 package org.example.disciplinaryrecordsmanagement.security;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.example.disciplinaryrecordsmanagement.exception.ErrorCode;
 import org.example.disciplinaryrecordsmanagement.result.Result;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import tools.jackson.databind.json.JsonMapper;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import tools.jackson.databind.json.JsonMapper;
 
 @Component
 public class SecurityResponseWriter {

@@ -1,22 +1,27 @@
 package org.example.disciplinaryrecordsmanagement.service;
 
-import org.example.disciplinaryrecordsmanagement.config.BusinessPolicy;
-import org.example.disciplinaryrecordsmanagement.config.RetentionPolicy;
-import org.example.disciplinaryrecordsmanagement.dto.StatisticsDto.*;
-import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Filter;
-import org.example.disciplinaryrecordsmanagement.exception.BusinessException;
-import org.example.disciplinaryrecordsmanagement.mapper.ViolationMapper;
-import org.example.disciplinaryrecordsmanagement.model.ViolationStatus;
-import org.example.disciplinaryrecordsmanagement.model.Viewer;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.Clock;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.example.disciplinaryrecordsmanagement.config.BusinessPolicy;
+import org.example.disciplinaryrecordsmanagement.config.RetentionPolicy;
+import org.example.disciplinaryrecordsmanagement.dto.StatisticsDto.Bucket;
+import org.example.disciplinaryrecordsmanagement.dto.StatisticsDto.Daily;
+import org.example.disciplinaryrecordsmanagement.dto.StatisticsDto.Dimension;
+import org.example.disciplinaryrecordsmanagement.dto.StatisticsDto.Period;
+import org.example.disciplinaryrecordsmanagement.dto.StatisticsDto.Summary;
+import org.example.disciplinaryrecordsmanagement.dto.StatisticsDto.TrendPoint;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Filter;
+import org.example.disciplinaryrecordsmanagement.exception.BusinessException;
+import org.example.disciplinaryrecordsmanagement.mapper.ViolationMapper;
+import org.example.disciplinaryrecordsmanagement.model.Viewer;
+import org.example.disciplinaryrecordsmanagement.model.ViolationStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_TREND_BUCKETS;
 

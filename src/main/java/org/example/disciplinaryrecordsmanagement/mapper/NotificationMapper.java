@@ -1,13 +1,18 @@
 package org.example.disciplinaryrecordsmanagement.mapper;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.example.disciplinaryrecordsmanagement.dto.NotificationDto.Row;
 import org.example.disciplinaryrecordsmanagement.model.NotificationType;
 import org.example.disciplinaryrecordsmanagement.model.Role;
 import org.example.disciplinaryrecordsmanagement.model.ViolationStatus;
-import org.apache.ibatis.annotations.*;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @Mapper
 public interface NotificationMapper {

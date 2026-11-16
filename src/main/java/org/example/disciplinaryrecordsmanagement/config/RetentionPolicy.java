@@ -1,14 +1,15 @@
 package org.example.disciplinaryrecordsmanagement.config;
 
-import org.example.disciplinaryrecordsmanagement.model.RetentionWindow;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.validation.annotation.Validated;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
+
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+
+import org.example.disciplinaryrecordsmanagement.model.RetentionWindow;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.validation.annotation.Validated;
 
 @Validated
 @ConfigurationProperties("app.retention")

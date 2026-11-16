@@ -1,6 +1,7 @@
 package org.example.disciplinaryrecordsmanagement.service;
 
 import jakarta.mail.MessagingException;
+
 import org.example.disciplinaryrecordsmanagement.config.SmtpRuntime;
 import org.example.disciplinaryrecordsmanagement.exception.BusinessException;
 import org.slf4j.Logger;

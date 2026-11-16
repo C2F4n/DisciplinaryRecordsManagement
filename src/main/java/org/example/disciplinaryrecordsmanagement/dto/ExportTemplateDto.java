@@ -1,12 +1,21 @@
 package org.example.disciplinaryrecordsmanagement.dto;
 
-import jakarta.validation.constraints.*;
-import org.example.disciplinaryrecordsmanagement.model.WorkbookColumn;
-
 import java.util.Arrays;
 import java.util.List;
 
-import static org.example.disciplinaryrecordsmanagement.constant.ReportConstants.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
+
+import org.example.disciplinaryrecordsmanagement.model.WorkbookColumn;
+
+import static org.example.disciplinaryrecordsmanagement.constant.ReportConstants.BULLETIN_TITLE;
+import static org.example.disciplinaryrecordsmanagement.constant.ReportConstants.FILTERED_TITLE;
+import static org.example.disciplinaryrecordsmanagement.constant.ReportConstants.MAX_WORKBOOK_COLUMNS;
+import static org.example.disciplinaryrecordsmanagement.constant.ReportConstants.MAX_WORKBOOK_TITLE_LENGTH;
+import static org.example.disciplinaryrecordsmanagement.constant.ReportConstants.MONTHLY_TITLE;
 
 public final class ExportTemplateDto {
     private ExportTemplateDto() {}

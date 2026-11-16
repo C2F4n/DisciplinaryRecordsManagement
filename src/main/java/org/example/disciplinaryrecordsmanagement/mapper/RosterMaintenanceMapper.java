@@ -1,10 +1,18 @@
 package org.example.disciplinaryrecordsmanagement.mapper;
 
-import org.apache.ibatis.annotations.*;
-import org.example.disciplinaryrecordsmanagement.dto.RosterMaintenanceDto.*;
-import org.example.disciplinaryrecordsmanagement.model.Role;
-
 import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+import org.example.disciplinaryrecordsmanagement.dto.RosterMaintenanceDto.ChangeStudent;
+import org.example.disciplinaryrecordsmanagement.dto.RosterMaintenanceDto.ClassRow;
+import org.example.disciplinaryrecordsmanagement.dto.RosterMaintenanceDto.StudentNumberRule;
+import org.example.disciplinaryrecordsmanagement.dto.RosterMaintenanceDto.StudentProfile;
+import org.example.disciplinaryrecordsmanagement.dto.RosterMaintenanceDto.StudentRevision;
+import org.example.disciplinaryrecordsmanagement.model.Role;
 
 @Mapper
 public interface RosterMaintenanceMapper {

@@ -1,5 +1,8 @@
 package org.example.disciplinaryrecordsmanagement.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.example.disciplinaryrecordsmanagement.config.BusinessPolicy;
 import org.example.disciplinaryrecordsmanagement.dto.RoleGuideDto;
 import org.example.disciplinaryrecordsmanagement.dto.RoleGuideDto.IdentityCount;
@@ -7,9 +10,6 @@ import org.example.disciplinaryrecordsmanagement.mapper.RoleGuideMapper;
 import org.example.disciplinaryrecordsmanagement.model.Role;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import static org.example.disciplinaryrecordsmanagement.constant.DepartmentCodes.DISCIPLINE;
 

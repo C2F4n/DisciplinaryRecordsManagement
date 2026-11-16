@@ -1,9 +1,9 @@
 package org.example.disciplinaryrecordsmanagement.dto;
 
+import java.time.LocalDate;
+
 import org.example.disciplinaryrecordsmanagement.dto.MonthlyReportDto.Item;
 import org.example.disciplinaryrecordsmanagement.model.ViolationStatus;
-
-import java.time.LocalDate;
 
 public record WorkbookRow(LocalDate occurredOn, String studentNo, String studentName, String className,
                           String counselor, String departmentName, String typeName, String reason,

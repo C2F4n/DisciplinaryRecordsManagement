@@ -3,7 +3,22 @@ package org.example.disciplinaryrecordsmanagement.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 
-import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.*;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.AUTH_REQUIRED;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.CONFLICT;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.CSRF_INVALID;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.FORBIDDEN;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.INTERNAL_ERROR;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.INVALID_REQUEST;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.LOGIN_FAILED;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.METHOD_NOT_ALLOWED;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.NOT_ACCEPTABLE;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.NOT_FOUND;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.PASSWORD_CHANGE_REQUIRED;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.RATE_LIMITED;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.REGISTRATION_MAIL_UNAVAILABLE;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.SMTP_SETTINGS_LOCKED;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.UNSUPPORTED_MEDIA;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.UPLOAD_TOO_LARGE;
 
 public enum ErrorCode {
     INVALID(4000, HttpStatus.BAD_REQUEST, INVALID_REQUEST),

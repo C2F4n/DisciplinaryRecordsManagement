@@ -1,5 +1,9 @@
 package org.example.disciplinaryrecordsmanagement.service;
 
+import java.time.Clock;
+import java.time.LocalDate;
+import java.util.Objects;
+
 import org.example.disciplinaryrecordsmanagement.dto.AccountDto.Department;
 import org.example.disciplinaryrecordsmanagement.dto.PermissionRequestDto.Decision;
 import org.example.disciplinaryrecordsmanagement.dto.PermissionRequestDto.Entry;
@@ -17,15 +21,28 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Clock;
-import java.time.LocalDate;
-import java.util.Objects;
-
-import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.*;
-import static org.example.disciplinaryrecordsmanagement.model.AuditEvent.*;
-import static org.example.disciplinaryrecordsmanagement.model.NotificationType.*;
-import static org.example.disciplinaryrecordsmanagement.model.PermissionRequestStatus.*;
-import static org.example.disciplinaryrecordsmanagement.model.Role.*;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.DEPARTMENT_NOT_FOUND;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.PERMISSION_ALREADY_GRANTED;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.PERMISSION_CLASS_CHANGED;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.PERMISSION_PENDING;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.PERMISSION_PROCESSED;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.PERMISSION_ROLE_UNAVAILABLE;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.PERMISSION_STUDENT_INACTIVE;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.ROLE_WITHOUT_SCOPE;
+import static org.example.disciplinaryrecordsmanagement.model.AuditEvent.APPROVE_PERMISSION;
+import static org.example.disciplinaryrecordsmanagement.model.AuditEvent.REJECT_PERMISSION;
+import static org.example.disciplinaryrecordsmanagement.model.AuditEvent.REQUEST_PERMISSION;
+import static org.example.disciplinaryrecordsmanagement.model.NotificationType.PERMISSION_APPROVED;
+import static org.example.disciplinaryrecordsmanagement.model.NotificationType.PERMISSION_REJECTED;
+import static org.example.disciplinaryrecordsmanagement.model.NotificationType.PERMISSION_REQUESTED;
+import static org.example.disciplinaryrecordsmanagement.model.PermissionRequestStatus.APPROVED;
+import static org.example.disciplinaryrecordsmanagement.model.PermissionRequestStatus.PENDING;
+import static org.example.disciplinaryrecordsmanagement.model.PermissionRequestStatus.REJECTED;
+import static org.example.disciplinaryrecordsmanagement.model.Role.CLASS_COMMITTEE;
+import static org.example.disciplinaryrecordsmanagement.model.Role.DEPARTMENT_HEAD;
+import static org.example.disciplinaryrecordsmanagement.model.Role.OFFICER;
+import static org.example.disciplinaryrecordsmanagement.model.Role.PRESIDENT;
+import static org.example.disciplinaryrecordsmanagement.model.Role.TEACHER;
 
 @Service
 public class PermissionRequestService {

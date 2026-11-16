@@ -1,20 +1,28 @@
 package org.example.disciplinaryrecordsmanagement.controller;
 
+import java.security.Principal;
+
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+
 import org.example.disciplinaryrecordsmanagement.dto.AuditDto.Entry;
 import org.example.disciplinaryrecordsmanagement.dto.AuditDto.Filter;
 import org.example.disciplinaryrecordsmanagement.result.PageResult;
 import org.example.disciplinaryrecordsmanagement.result.Result;
 import org.example.disciplinaryrecordsmanagement.service.AccountService;
 import org.example.disciplinaryrecordsmanagement.service.AuditService;
-import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import static org.example.disciplinaryrecordsmanagement.constant.ApiRoutes.ROOT;
-import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.*;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.DEFAULT_PAGE;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.DEFAULT_PAGE_SIZE;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_PAGE;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_PAGE_SIZE;
 
 @RestController
 @RequestMapping(ROOT + "/admin/audit")

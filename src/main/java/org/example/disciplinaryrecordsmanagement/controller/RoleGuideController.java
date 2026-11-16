@@ -1,13 +1,13 @@
 package org.example.disciplinaryrecordsmanagement.controller;
 
+import java.security.Principal;
+
 import org.example.disciplinaryrecordsmanagement.dto.RoleGuideDto;
 import org.example.disciplinaryrecordsmanagement.result.Result;
 import org.example.disciplinaryrecordsmanagement.service.AccountService;
 import org.example.disciplinaryrecordsmanagement.service.RoleGuideService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.security.Principal;
 
 import static org.example.disciplinaryrecordsmanagement.constant.ApiRoutes.ROOT;
 

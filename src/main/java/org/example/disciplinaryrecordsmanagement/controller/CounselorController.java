@@ -1,15 +1,20 @@
 package org.example.disciplinaryrecordsmanagement.controller;
 
+import java.security.Principal;
+import java.util.List;
+
 import jakarta.validation.Valid;
+
 import org.example.disciplinaryrecordsmanagement.dto.CounselorDto.Create;
 import org.example.disciplinaryrecordsmanagement.dto.CounselorDto.Option;
 import org.example.disciplinaryrecordsmanagement.result.Result;
 import org.example.disciplinaryrecordsmanagement.service.AccountService;
 import org.example.disciplinaryrecordsmanagement.service.CounselorService;
-import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import static org.example.disciplinaryrecordsmanagement.constant.ApiRoutes.ROOT;
 

@@ -1,25 +1,56 @@
 package org.example.disciplinaryrecordsmanagement.controller;
 
-import org.example.disciplinaryrecordsmanagement.dto.AccountDto.*;
+import java.security.Principal;
+import java.util.List;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.Bind;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.Csrf;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.CurrentUser;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.EmailAddress;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.EmailCodeSent;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.EmailSettings;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.Enabled;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.Grant;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.GrantChange;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.Group;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.NewGroup;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.NewStaff;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.NewStudent;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.PasswordChange;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.PublicClass;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.RegistrationIdentity;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.TemporaryPassword;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.UserSummary;
 import org.example.disciplinaryrecordsmanagement.exception.BusinessException;
 import org.example.disciplinaryrecordsmanagement.result.Result;
 import org.example.disciplinaryrecordsmanagement.service.AccountService;
 import org.example.disciplinaryrecordsmanagement.service.RegistrationEmailService;
-import jakarta.validation.Valid;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
-import java.util.List;
-
-import static org.example.disciplinaryrecordsmanagement.constant.ApiRoutes.*;
+import static org.example.disciplinaryrecordsmanagement.constant.ApiRoutes.BIND;
+import static org.example.disciplinaryrecordsmanagement.constant.ApiRoutes.BINDING_CLASSES;
+import static org.example.disciplinaryrecordsmanagement.constant.ApiRoutes.BIND_EMAIL_CODE;
+import static org.example.disciplinaryrecordsmanagement.constant.ApiRoutes.CSRF;
+import static org.example.disciplinaryrecordsmanagement.constant.ApiRoutes.PASSWORD;
+import static org.example.disciplinaryrecordsmanagement.constant.ApiRoutes.ROOT;
 import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.REGISTRATION_CODE_INVALID;
 import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_USERNAME_LENGTH;
 

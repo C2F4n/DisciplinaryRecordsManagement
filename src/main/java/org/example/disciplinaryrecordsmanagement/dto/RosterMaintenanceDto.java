@@ -1,11 +1,28 @@
 package org.example.disciplinaryrecordsmanagement.dto;
 
-import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.*;
-import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
+
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.STUDENT_NUMBER_FIXED_LENGTH;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.STUDENT_NUMBER_LENGTH_RANGE;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.STUDENT_NUMBER_PREFIX_REQUIREMENT;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_CLASS_COUNSELORS;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_CLASS_NAME_LENGTH;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_COUNSELOR_NAME_LENGTH;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_STUDENT_NAME_LENGTH;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_STUDENT_NUMBER_LENGTH;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.OPTIONAL_PHONE;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.STUDENT_NUMBER;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.STUDENT_NUMBER_PREFIX;
 
 public final class RosterMaintenanceDto {
     private RosterMaintenanceDto() {}

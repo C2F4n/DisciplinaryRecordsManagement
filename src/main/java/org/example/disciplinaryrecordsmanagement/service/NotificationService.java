@@ -1,5 +1,10 @@
 package org.example.disciplinaryrecordsmanagement.service;
 
+import java.time.Clock;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.util.List;
+
 import org.example.disciplinaryrecordsmanagement.config.BusinessPolicy;
 import org.example.disciplinaryrecordsmanagement.config.SmtpRuntime;
 import org.example.disciplinaryrecordsmanagement.dto.NotificationDto.Notice;
@@ -13,13 +18,14 @@ import org.example.disciplinaryrecordsmanagement.result.PageResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Clock;
-import java.time.LocalDate;
-import java.time.YearMonth;
-import java.util.List;
-
 import static org.example.disciplinaryrecordsmanagement.constant.DepartmentCodes.DISCIPLINE;
-import static org.example.disciplinaryrecordsmanagement.model.NotificationType.*;
+import static org.example.disciplinaryrecordsmanagement.model.NotificationType.REPORT_PENDING_REVIEW;
+import static org.example.disciplinaryrecordsmanagement.model.NotificationType.REVIEW_OVERDUE;
+import static org.example.disciplinaryrecordsmanagement.model.NotificationType.VIOLATION_APPEALED;
+import static org.example.disciplinaryrecordsmanagement.model.NotificationType.VIOLATION_APPROVED;
+import static org.example.disciplinaryrecordsmanagement.model.NotificationType.VIOLATION_CORRECTED;
+import static org.example.disciplinaryrecordsmanagement.model.NotificationType.VIOLATION_HANDED_BACK;
+import static org.example.disciplinaryrecordsmanagement.model.NotificationType.VIOLATION_REGISTERED;
 import static org.example.disciplinaryrecordsmanagement.model.Role.DEPARTMENT_HEAD;
 import static org.example.disciplinaryrecordsmanagement.model.ViolationStatus.PENDING;
 

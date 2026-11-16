@@ -1,5 +1,11 @@
 package org.example.disciplinaryrecordsmanagement.service;
 
+import java.time.Clock;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.util.List;
+import java.util.TreeMap;
+
 import org.example.disciplinaryrecordsmanagement.config.RetentionPolicy;
 import org.example.disciplinaryrecordsmanagement.dto.RetentionDto.Overview;
 import org.example.disciplinaryrecordsmanagement.dto.RetentionDto.Run;
@@ -11,12 +17,6 @@ import org.example.disciplinaryrecordsmanagement.model.Viewer;
 import org.example.disciplinaryrecordsmanagement.result.PageResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.Clock;
-import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
-import java.util.List;
-import java.util.TreeMap;
 
 import static org.example.disciplinaryrecordsmanagement.config.RetentionPolicy.WEEK_END;
 import static org.example.disciplinaryrecordsmanagement.config.RetentionPolicy.WEEK_START;

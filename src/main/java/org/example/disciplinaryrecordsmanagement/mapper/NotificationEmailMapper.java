@@ -1,10 +1,14 @@
 package org.example.disciplinaryrecordsmanagement.mapper;
 
-import org.apache.ibatis.annotations.*;
-import org.example.disciplinaryrecordsmanagement.model.NotificationType;
-
 import java.time.LocalDate;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+import org.example.disciplinaryrecordsmanagement.model.NotificationType;
 
 @Mapper
 public interface NotificationEmailMapper {

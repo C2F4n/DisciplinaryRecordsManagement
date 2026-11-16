@@ -1,13 +1,30 @@
 package org.example.disciplinaryrecordsmanagement.dto;
 
-import org.example.disciplinaryrecordsmanagement.model.Role;
-import jakarta.validation.constraints.*;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.SortedSet;
 
-import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+
+import org.example.disciplinaryrecordsmanagement.model.Role;
+
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.EMAIL_CODE_PATTERN;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_CLASS_COUNSELORS;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_CLASS_NAME_LENGTH;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_COUNSELOR_NAME_LENGTH;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_EMAIL_LENGTH;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_GRANT_SCOPE_LENGTH;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_PASSWORD_BYTES;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_STUDENT_NAME_LENGTH;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.OPTIONAL_PHONE;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.SINGLE_EMAIL;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.STAFF_NAME;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.STUDENT_NUMBER;
 
 public final class AccountDto {
     private AccountDto() {}

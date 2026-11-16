@@ -1,8 +1,8 @@
 package org.example.disciplinaryrecordsmanagement.model;
 
-import org.example.disciplinaryrecordsmanagement.dto.WorkbookRow;
-
 import java.util.function.Function;
+
+import org.example.disciplinaryrecordsmanagement.dto.WorkbookRow;
 
 public enum WorkbookColumn {
     DATE("日期", 14, WorkbookRow::occurredOn),

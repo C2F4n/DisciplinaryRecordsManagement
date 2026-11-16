@@ -1,22 +1,39 @@
 package org.example.disciplinaryrecordsmanagement.service;
 
-import org.example.disciplinaryrecordsmanagement.dto.RosterMaintenanceDto.*;
+import java.time.Clock;
+import java.time.LocalDate;
+import java.util.List;
+
 import org.example.disciplinaryrecordsmanagement.dto.CounselorDto.Option;
+import org.example.disciplinaryrecordsmanagement.dto.RosterMaintenanceDto.ChangeClass;
+import org.example.disciplinaryrecordsmanagement.dto.RosterMaintenanceDto.ChangeStudent;
+import org.example.disciplinaryrecordsmanagement.dto.RosterMaintenanceDto.ClassRow;
+import org.example.disciplinaryrecordsmanagement.dto.RosterMaintenanceDto.ManagedClass;
+import org.example.disciplinaryrecordsmanagement.dto.RosterMaintenanceDto.StudentNumberRule;
+import org.example.disciplinaryrecordsmanagement.dto.RosterMaintenanceDto.StudentProfile;
 import org.example.disciplinaryrecordsmanagement.exception.BusinessException;
 import org.example.disciplinaryrecordsmanagement.mapper.AccountMapper;
 import org.example.disciplinaryrecordsmanagement.mapper.RosterMaintenanceMapper;
+import org.example.disciplinaryrecordsmanagement.model.AuditEvent.Marker;
+import org.example.disciplinaryrecordsmanagement.model.AuditEvent.Target;
 import org.example.disciplinaryrecordsmanagement.model.Role;
 import org.example.disciplinaryrecordsmanagement.model.Viewer;
 import org.example.disciplinaryrecordsmanagement.result.PageResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.Clock;
-import java.util.List;
-
-import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.*;
-import static org.example.disciplinaryrecordsmanagement.model.AuditEvent.*;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.CLASS_HAS_STUDENTS;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.CLASS_NOT_FOUND;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.CLASS_ROSTER_CHANGED;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.ENROLLMENT_VALIDITY_INVALID;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.STALE_RECORD;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.STUDENT_NUMBER_RULE_INVALID;
+import static org.example.disciplinaryrecordsmanagement.model.AuditEvent.DELETE_CLASS;
+import static org.example.disciplinaryrecordsmanagement.model.AuditEvent.DELETE_STUDENT;
+import static org.example.disciplinaryrecordsmanagement.model.AuditEvent.REVOKE_STUDENT_COMMITTEE;
+import static org.example.disciplinaryrecordsmanagement.model.AuditEvent.UPDATE_CLASS;
+import static org.example.disciplinaryrecordsmanagement.model.AuditEvent.UPDATE_STUDENT_NUMBER_RULE;
+import static org.example.disciplinaryrecordsmanagement.model.AuditEvent.UPDATE_STUDENT_PROFILE;
 import static org.springframework.util.StringUtils.hasText;
 
 @Service

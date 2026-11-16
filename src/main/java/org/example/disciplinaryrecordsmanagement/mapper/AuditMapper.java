@@ -1,7 +1,6 @@
 package org.example.disciplinaryrecordsmanagement.mapper;
 
-import org.example.disciplinaryrecordsmanagement.model.AuditEvent;
-import org.example.disciplinaryrecordsmanagement.model.AuditEvent.Target;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -9,8 +8,8 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.example.disciplinaryrecordsmanagement.dto.AuditDto.Entry;
 import org.example.disciplinaryrecordsmanagement.dto.AuditDto.Filter;
-
-import java.util.List;
+import org.example.disciplinaryrecordsmanagement.model.AuditEvent;
+import org.example.disciplinaryrecordsmanagement.model.AuditEvent.Target;
 
 @Mapper
 public interface AuditMapper {

@@ -1,20 +1,34 @@
 package org.example.disciplinaryrecordsmanagement.controller;
 
+import java.security.Principal;
+
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.example.disciplinaryrecordsmanagement.dto.SmtpSettingsDto.*;
+
+import org.example.disciplinaryrecordsmanagement.dto.SmtpSettingsDto.ChangeSettings;
+import org.example.disciplinaryrecordsmanagement.dto.SmtpSettingsDto.PasswordChange;
+import org.example.disciplinaryrecordsmanagement.dto.SmtpSettingsDto.Settings;
+import org.example.disciplinaryrecordsmanagement.dto.SmtpSettingsDto.Unlock;
+import org.example.disciplinaryrecordsmanagement.dto.SmtpSettingsDto.Unlocked;
 import org.example.disciplinaryrecordsmanagement.result.Result;
 import org.example.disciplinaryrecordsmanagement.service.AccountService;
 import org.example.disciplinaryrecordsmanagement.service.SmtpSettingsService;
 import org.example.disciplinaryrecordsmanagement.service.SmtpSettingsService.Access;
 import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import static org.example.disciplinaryrecordsmanagement.constant.ApiRoutes.ROOT;
-import static org.example.disciplinaryrecordsmanagement.constant.SmtpSettingsConstants.*;
+import static org.example.disciplinaryrecordsmanagement.constant.SmtpSettingsConstants.SMTP_SETTINGS_PATH;
+import static org.example.disciplinaryrecordsmanagement.constant.SmtpSettingsConstants.SMTP_UNLOCK_HEADER;
+import static org.example.disciplinaryrecordsmanagement.constant.SmtpSettingsConstants.SMTP_UNLOCK_MILLIS;
 
 @RestController
 @RequestMapping(ROOT + SMTP_SETTINGS_PATH)

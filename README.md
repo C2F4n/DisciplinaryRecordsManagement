@@ -101,7 +101,7 @@ CREATE USER 'discipline_app'@'127.0.0.1' IDENTIFIED BY '替换为随机数据库
 GRANT ALL PRIVILEGES ON disciplinary_records.* TO 'discipline_app'@'127.0.0.1';
 ```
 
-把仓库根目录的 `.env.example` 复制为 `.env`。部署包可直接编辑自带的 `.env`。库名和数据库账号可自定义，保持 SQL 与 `.env` 的配置一致。
+把仓库根目录的 `.env.example` 复制为 `.env`（部署包直接编辑自带的 `.env`）。模板里只有第 1、2 段需要填，其余留空即用程序默认值。库名和数据库账号可自定义，保持 SQL 与 `.env` 的配置一致。
 
 ```dotenv
 DB_URL=jdbc:mysql://127.0.0.1:3306/disciplinary_records?connectionTimeZone=Asia/Shanghai
@@ -111,13 +111,15 @@ APP_ADMIN_USERNAME=admin
 APP_ADMIN_PASSWORD=你的网页管理员初始密码
 ```
 
-从 `.env` 所在目录启动时会读取这些配置。首次连接空库，Flyway 自动建表并写入基础配置。系统根据 `APP_ADMIN_*` 创建网页管理员。部署包可双击「启动系统.cmd」。
+从 `.env` 所在目录启动时会读取这些配置。首次连接空库，Flyway 自动建表并写入基础配置。系统根据 `APP_ADMIN_*` 创建网页管理员。部署包可双击「启动系统.cmd」；完整步骤与常见问题见 [部署教程](./部署教程.md)。
+
+`.env` 按 properties 语法解析：值一律用 ASCII、不加引号，中文只能写在注释里。`APP_ADMIN_PASSWORD` 不合规时，空库首启会直接退出（日志提示「密码须为 6–18 个字符」）。`DB_URL` 末尾的 `connectionTimeZone` 不要删，否则日期会随时区偏移。
 
 ## 本地开发运行
 
 开发环境使用 Java 21、Node.js 22.12+ 或 24 和 MySQL 8。
 
-也可以用 PowerShell 配环境变量启动。默认连接本机 3306 端口，Flyway 会创建业务表；应用默认地址为 http://127.0.0.1:18643。
+也可以用 PowerShell 配环境变量启动。默认连接本机 3306 端口，Flyway 会创建业务表。`.env` 默认开启本机 HTTPS，访问地址为 <https://127.0.0.1:18643>；若把 `server.ssl.enabled` 设为 `false`，则改为 <http://127.0.0.1:18643>，同时须把 `SESSION_COOKIE_SECURE` 也设为 `false`。
 
 ```powershell
 $env:DB_USER = 'discipline_app'
@@ -165,5 +167,7 @@ npm.cmd run dev
 
 - `mvnw.cmd test` 默认使用内存测试库，覆盖名册核验注册、权限申请及审批、密码重置、审计查询、并发审核、名册维护、业务选项、通报表、导出模板、月报冻结与下载和按周清理。要验证 MySQL，提供 `TEST_DB_URL`、`TEST_DB_USER` 和 `TEST_DB_PASSWORD`，指向一个新建的独立测试库。
 - 前端目录运行 `npm.cmd run build`，完成 TypeScript 检查和生产构建。
-- 先构建前端，再在根目录运行 `mvnw.cmd clean package`。Maven 会把 `frontend/dist` 放进 Jar。保留上面的数据库环境变量，运行 `java -jar target/DisciplinaryRecordsManagement-0.0.1-SNAPSHOT.jar` 即可由 Spring Boot 同时提供页面和 API。
+- **一条命令出交付包**：`.\打包.ps1`。产物在 `dist\违纪统计系统_<时间戳>`，只包含 JAR、`.https`、`启动系统.cmd`、`.env`、`.env.example` 和两份说明文档；证书与 keystore 口令每次重新生成并直接写进该目录的 `.env`，不会把开发机的 `.env`、日志、`.smtp-settings.key` 带出去。加 `-WithTests` 先跑测试，加 `-ForceFrontendBuild` 强制重建前端。
+- 手工打包：先构建前端，再在根目录运行 `mvnw.cmd clean package`。Maven 会把 `frontend/dist` 放进 Jar。保留上面的数据库环境变量，运行 `java -jar target/DisciplinaryRecordsManagement-0.0.1-SNAPSHOT.jar` 即可由 Spring Boot 同时提供页面和 API。
+- **代码风格**：`mvn spotless:apply` 统一 import 顺序并删除无用 import，`mvn spotless:check` 做校验；缩进与换行由 `.editorconfig` 约定。项目不使用通配符 import。
 - 正式部署前使用 HTTPS（学院网关或 Spring Boot 证书皆可），设置 `SESSION_COOKIE_SECURE=true`，限制数据库访问来源，并核对数据保留和备份恢复策略。不要把测试数据混进正式库。

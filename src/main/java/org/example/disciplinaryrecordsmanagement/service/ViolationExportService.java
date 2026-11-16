@@ -1,5 +1,8 @@
 package org.example.disciplinaryrecordsmanagement.service;
 
+import java.time.Clock;
+import java.time.LocalDate;
+
 import org.example.disciplinaryrecordsmanagement.config.ExportPolicy;
 import org.example.disciplinaryrecordsmanagement.config.RetentionPolicy;
 import org.example.disciplinaryrecordsmanagement.dto.ExportTemplateDto.Kind;
@@ -13,14 +16,11 @@ import org.example.disciplinaryrecordsmanagement.model.Viewer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Clock;
-import java.time.LocalDate;
-
-import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.EXPORT_PENDING_RECORDS;
 import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.EXPORT_APPEALED_BULLETIN;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.EXPORT_PENDING_RECORDS;
 import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.EXPORT_TOO_MANY_RECORDS;
-import static org.example.disciplinaryrecordsmanagement.model.ViolationStatus.PENDING;
 import static org.example.disciplinaryrecordsmanagement.model.ViolationStatus.APPEALED;
+import static org.example.disciplinaryrecordsmanagement.model.ViolationStatus.PENDING;
 
 @Service
 public class ViolationExportService {

@@ -1,10 +1,13 @@
 package org.example.disciplinaryrecordsmanagement.config;
 
+import java.time.Clock;
+
+import jakarta.servlet.DispatcherType;
+
 import org.example.disciplinaryrecordsmanagement.security.AttemptLimiter;
 import org.example.disciplinaryrecordsmanagement.security.SecurityResponseWriter;
 import org.example.disciplinaryrecordsmanagement.security.SessionUser;
 import org.example.disciplinaryrecordsmanagement.service.AccountService;
-import jakarta.servlet.DispatcherType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -19,10 +22,19 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CsrfException;
 
-import java.time.Clock;
-
-import static org.example.disciplinaryrecordsmanagement.constant.ApiRoutes.*;
-import static org.example.disciplinaryrecordsmanagement.exception.ErrorCode.*;
+import static org.example.disciplinaryrecordsmanagement.constant.ApiRoutes.BIND;
+import static org.example.disciplinaryrecordsmanagement.constant.ApiRoutes.BINDING_CLASSES;
+import static org.example.disciplinaryrecordsmanagement.constant.ApiRoutes.BIND_EMAIL_CODE;
+import static org.example.disciplinaryrecordsmanagement.constant.ApiRoutes.CSRF;
+import static org.example.disciplinaryrecordsmanagement.constant.ApiRoutes.LOGIN;
+import static org.example.disciplinaryrecordsmanagement.constant.ApiRoutes.LOGOUT;
+import static org.example.disciplinaryrecordsmanagement.constant.ApiRoutes.PATTERN;
+import static org.example.disciplinaryrecordsmanagement.constant.ApiRoutes.ROOT;
+import static org.example.disciplinaryrecordsmanagement.exception.ErrorCode.ACCESS_DENIED;
+import static org.example.disciplinaryrecordsmanagement.exception.ErrorCode.BAD_CREDENTIALS;
+import static org.example.disciplinaryrecordsmanagement.exception.ErrorCode.INVALID_CSRF;
+import static org.example.disciplinaryrecordsmanagement.exception.ErrorCode.UNAUTHENTICATED;
+import static org.example.disciplinaryrecordsmanagement.exception.ErrorCode.UNEXPECTED;
 
 @Configuration
 class SecurityConfig {

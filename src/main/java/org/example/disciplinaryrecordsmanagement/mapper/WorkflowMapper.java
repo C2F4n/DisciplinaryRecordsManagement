@@ -1,10 +1,18 @@
 package org.example.disciplinaryrecordsmanagement.mapper;
 
-import org.apache.ibatis.annotations.*;
-import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Resolution;
-import org.example.disciplinaryrecordsmanagement.dto.WorkflowDto.*;
-
 import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+import org.example.disciplinaryrecordsmanagement.dto.ViolationDto.Resolution;
+import org.example.disciplinaryrecordsmanagement.dto.WorkflowDto.Choice;
+import org.example.disciplinaryrecordsmanagement.dto.WorkflowDto.Kind;
+import org.example.disciplinaryrecordsmanagement.dto.WorkflowDto.Option;
+import org.example.disciplinaryrecordsmanagement.dto.WorkflowDto.TypeAssignment;
 
 @Mapper
 public interface WorkflowMapper {

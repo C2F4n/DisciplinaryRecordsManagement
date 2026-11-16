@@ -1,16 +1,27 @@
 package org.example.disciplinaryrecordsmanagement.service;
 
-import org.example.disciplinaryrecordsmanagement.dto.WorkbookDownload;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.stereotype.Component;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.List;
 
-import static org.example.disciplinaryrecordsmanagement.constant.RosterConstants.*;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.example.disciplinaryrecordsmanagement.dto.WorkbookDownload;
+import org.springframework.stereotype.Component;
+
+import static org.example.disciplinaryrecordsmanagement.constant.RosterConstants.CLASS_ROSTER_HEADERS;
+import static org.example.disciplinaryrecordsmanagement.constant.RosterConstants.CLASS_ROSTER_SHEET;
+import static org.example.disciplinaryrecordsmanagement.constant.RosterConstants.CLASS_TEMPLATE_FILE;
+import static org.example.disciplinaryrecordsmanagement.constant.RosterConstants.HEADER_ROW;
+import static org.example.disciplinaryrecordsmanagement.constant.RosterConstants.ROSTER_HEADERS;
+import static org.example.disciplinaryrecordsmanagement.constant.RosterConstants.ROSTER_SHEET;
+import static org.example.disciplinaryrecordsmanagement.constant.RosterConstants.TEMPLATE_FILE;
 
 @Component
 class RosterWorkbookWriter {

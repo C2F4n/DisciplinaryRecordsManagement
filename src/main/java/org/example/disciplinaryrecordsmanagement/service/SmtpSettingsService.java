@@ -1,9 +1,19 @@
 package org.example.disciplinaryrecordsmanagement.service;
 
+import java.nio.charset.StandardCharsets;
+import java.time.Clock;
+import java.time.Duration;
+import java.util.UUID;
+import java.util.regex.Pattern;
+
 import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
+
 import org.example.disciplinaryrecordsmanagement.config.SmtpRuntime;
-import org.example.disciplinaryrecordsmanagement.dto.SmtpSettingsDto.*;
+import org.example.disciplinaryrecordsmanagement.dto.SmtpSettingsDto.ChangeSettings;
+import org.example.disciplinaryrecordsmanagement.dto.SmtpSettingsDto.PasswordChange;
+import org.example.disciplinaryrecordsmanagement.dto.SmtpSettingsDto.Settings;
+import org.example.disciplinaryrecordsmanagement.dto.SmtpSettingsDto.Unlock;
 import org.example.disciplinaryrecordsmanagement.exception.BusinessException;
 import org.example.disciplinaryrecordsmanagement.mapper.SmtpSettingsMapper;
 import org.example.disciplinaryrecordsmanagement.mapper.SmtpSettingsMapper.Saved;
@@ -14,16 +24,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.charset.StandardCharsets;
-import java.time.Clock;
-import java.time.Duration;
-import java.util.UUID;
-import java.util.regex.Pattern;
-
-import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.*;
-import static org.example.disciplinaryrecordsmanagement.constant.SmtpSettingsConstants.*;
-import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.*;
-import static org.example.disciplinaryrecordsmanagement.model.AuditEvent.*;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.NEW_PASSWORD_REUSED;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.PASSWORD_RULE;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.SMTP_SETTINGS_PASSWORD_INVALID;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.SMTP_SETTINGS_REQUIRED;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.SMTP_SETTINGS_SECRET_ERROR;
+import static org.example.disciplinaryrecordsmanagement.constant.MessageConstants.STALE_RECORD;
+import static org.example.disciplinaryrecordsmanagement.constant.SmtpSettingsConstants.SMTP_SETTINGS_ID;
+import static org.example.disciplinaryrecordsmanagement.constant.SmtpSettingsConstants.SMTP_UNLOCK_MILLIS;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_PASSWORD_BYTES;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MAX_PASSWORD_LENGTH;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.MIN_PASSWORD_LENGTH;
+import static org.example.disciplinaryrecordsmanagement.constant.ValidationConstants.PASSWORD_PATTERN;
+import static org.example.disciplinaryrecordsmanagement.model.AuditEvent.CHANGE_SMTP_SETTINGS_PASSWORD;
+import static org.example.disciplinaryrecordsmanagement.model.AuditEvent.UPDATE_SMTP_SETTINGS;
 
 @Service
 public class SmtpSettingsService {

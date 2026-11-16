@@ -1,12 +1,20 @@
 package org.example.disciplinaryrecordsmanagement.mapper;
 
-import org.example.disciplinaryrecordsmanagement.dto.AccountDto.*;
-import org.example.disciplinaryrecordsmanagement.model.Role;
-
-import org.apache.ibatis.annotations.*;
-
 import java.time.LocalDate;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.Candidate;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.Department;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.Grant;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.Group;
+import org.example.disciplinaryrecordsmanagement.dto.AccountDto.UserSummary;
+import org.example.disciplinaryrecordsmanagement.model.Role;
 
 @Mapper
 public interface AccountMapper {

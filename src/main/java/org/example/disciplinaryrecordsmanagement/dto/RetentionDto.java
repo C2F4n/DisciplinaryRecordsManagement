@@ -1,8 +1,8 @@
 package org.example.disciplinaryrecordsmanagement.dto;
 
-import org.example.disciplinaryrecordsmanagement.result.PageResult;
-
 import java.time.LocalDate;
+
+import org.example.disciplinaryrecordsmanagement.result.PageResult;
 
 public final class RetentionDto {
     private RetentionDto() {}
