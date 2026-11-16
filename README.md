@@ -167,7 +167,7 @@ npm.cmd run dev
 
 - `mvnw.cmd test` 默认使用内存测试库，覆盖名册核验注册、权限申请及审批、密码重置、审计查询、并发审核、名册维护、业务选项、通报表、导出模板、月报冻结与下载和按周清理。要验证 MySQL，提供 `TEST_DB_URL`、`TEST_DB_USER` 和 `TEST_DB_PASSWORD`，指向一个新建的独立测试库。
 - 前端目录运行 `npm.cmd run build`，完成 TypeScript 检查和生产构建。
-- **一条命令出交付包**：`.\打包.ps1`。产物在 `dist\违纪统计系统_<时间戳>`，只包含 JAR、`.https`、`启动系统.cmd`、`.env`、`.env.example` 和两份说明文档；证书与 keystore 口令每次重新生成并直接写进该目录的 `.env`，不会把开发机的 `.env`、日志、`.smtp-settings.key` 带出去。加 `-WithTests` 先跑测试，加 `-ForceFrontendBuild` 强制重建前端。
+- **一条命令出交付包**：`.\打包.ps1`。产物在 `dist\违纪统计系统_<时间戳>`，只包含 JAR、`.https`、`启动系统.cmd`、`.env`、`.env.example`、`包信息.txt` 和两份说明文档；证书与 keystore 口令每次重新生成并直接写进该目录的 `.env`，`包信息.txt` 记录构建时间和 JAR 的 SHA-256 供收包方核对，不会把开发机的 `.env`、日志、`.smtp-settings.key` 带出去。加 `-WithTests` 先跑测试，加 `-ForceFrontendBuild` 强制重建前端。
 - 手工打包：先构建前端，再在根目录运行 `mvnw.cmd clean package`。Maven 会把 `frontend/dist` 放进 Jar。保留上面的数据库环境变量，运行 `java -jar target/DisciplinaryRecordsManagement-0.0.1-SNAPSHOT.jar` 即可由 Spring Boot 同时提供页面和 API。
 - **代码风格**：`mvn spotless:apply` 统一 import 顺序并删除无用 import，`mvn spotless:check` 做校验；缩进与换行由 `.editorconfig` 约定。项目不使用通配符 import。
 - 正式部署前使用 HTTPS（学院网关或 Spring Boot 证书皆可），设置 `SESSION_COOKIE_SECURE=true`，限制数据库访问来源，并核对数据保留和备份恢复策略。不要把测试数据混进正式库。

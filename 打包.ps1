@@ -70,14 +70,17 @@ if (-not $javaExe) { Fail '找不到 java，请先安装 JDK 21 并加入 PATH' 
 $frontendDist = Join-Path $repo 'frontend\dist'
 if ($ForceFrontendBuild -or -not (Test-Path (Join-Path $frontendDist 'index.html'))) {
     Step '构建前端'
-    if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
+    # Windows 默认禁止执行 npm.ps1，这里固定用 npm.cmd
+    $npmExe = (Get-Command 'npm.cmd' -ErrorAction SilentlyContinue).Source
+    if (-not $npmExe) { $npmExe = (Get-Command 'npm' -ErrorAction SilentlyContinue).Source }
+    if (-not $npmExe) {
         Fail '找不到 npm：请安装 Node.js，或先手工构建 frontend\dist 再重跑本脚本'
     }
     Push-Location (Join-Path $repo 'frontend')
     try {
-        if (-not (Test-Path 'node_modules')) { npm install --no-audit --no-fund }
+        if (-not (Test-Path 'node_modules')) { & $npmExe install --no-audit --no-fund }
         if ($LASTEXITCODE -ne 0) { Fail 'npm install 失败' }
-        npm run build
+        & $npmExe run build
         if ($LASTEXITCODE -ne 0) { Fail 'npm run build 失败' }
     } finally {
         Pop-Location
@@ -87,8 +90,8 @@ if ($ForceFrontendBuild -or -not (Test-Path (Join-Path $frontendDist 'index.html
 }
 
 # --- 2. 后端打包 -------------------------------------------------------------
-Step 'mvn package'
-$mvnArgs = @('-B', 'package')
+Step 'mvn clean package'
+$mvnArgs = @('-B', 'clean', 'package')
 if (-not $WithTests) { $mvnArgs += '-DskipTests' }
 & $mvnExe @mvnArgs
 if ($LASTEXITCODE -ne 0) { Fail 'mvn package 失败' }
@@ -161,12 +164,36 @@ Copy-Item $jar.FullName $out
 Copy-Item (Join-Path $repo 'deploy\*') $out -Recurse
 Copy-Item (Join-Path $repo '.env.example') $out
 
-# --- 7. 汇总 ------------------------------------------------------------------
+# --- 7. 生成包信息（用于核对交付物是否被替换或损坏）---------------------------
+Step '生成 包信息.txt'
+$jarHash = (Get-FileHash $jar.FullName -Algorithm SHA256).Hash.ToLower()
+$flywayCount = (Get-ChildItem (Join-Path $repo 'src\main\resources\db\migration') -Filter 'V*.sql' |
+    Measure-Object).Count
+$infoLines = @(
+    '违纪统计系统 —— 交付包信息',
+    '',
+    "包名        : 违纪统计系统",
+    "构建时间    : $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')",
+    "构建机器    : $env:COMPUTERNAME",
+    "JAR 文件    : $($jar.Name)",
+    "JAR 大小    : $($jar.Length) 字节 ($([math]::Round($jar.Length / 1MB, 1)) MB)",
+    "SHA-256     : $jarHash",
+    "运行环境    : Java 21 或更高 + MySQL 8",
+    "数据库迁移  : $flywayCount 个 Flyway 版本（首启自动执行）",
+    '',
+    "核对方法    : Get-FileHash '.\$($jar.Name)' -Algorithm SHA256  结果应与上面一致",
+    '说明        : 本目录 .env 与 .https 是每份交付独立生成的，不要跨包混用。'
+)
+$infoPath = Join-Path $out '包信息.txt'
+[System.IO.File]::WriteAllText($infoPath, (($infoLines -join "`r`n") + "`r`n"), (New-Object System.Text.UTF8Encoding($false)))
+
+# --- 8. 汇总 ------------------------------------------------------------------
 Step '完成'
 $files = Get-ChildItem $out -Recurse -File | Sort-Object FullName
 $totalMB = [math]::Round((($files | Measure-Object Length -Sum).Sum / 1MB), 1)
 Write-Host "输出目录：$out" -ForegroundColor Green
 Write-Host "文件数：$($files.Count)　　总大小：$totalMB MB"
+Write-Host "JAR SHA-256：$jarHash"
 $files | ForEach-Object { "  {0,10:N0}  {1}" -f $_.Length, $_.FullName.Substring($out.Length + 1) }
 
 Write-Host ""
