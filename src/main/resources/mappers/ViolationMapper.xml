@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.disciplinaryrecordsmanagement.mapper.ViolationMapper">
+    <sql id="columns">
+        id, student_id, class_id, student_no, student_name, class_name, counselor, occurred_on,
+        department_code, type_code, reason, disposition, inspection_scope, remarks, status,
+        rejection_reason, version, created_by, handed_back_at, inspection_label, appeal_label
+    </sql>
+    <sql id="filters">
+        WHERE v.deleted_at IS NULL
+        AND (v.status != #{scope.pending} OR v.occurred_on &gt;= #{oldestPending})
+        <if test="q.formalOnly">AND v.status != #{scope.pending}</if>
+        <if test="!scope.all">
+            AND (1 = 0
+            <if test="scope.studentId != null">OR v.student_id = #{scope.studentId}</if>
+            <if test="scope.classId != null">OR v.class_id = #{scope.classId}</if>
+            <if test="!scope.departments.isEmpty()">
+                OR v.department_code IN
+                <foreach collection="scope.departments" item="dept" open="(" separator="," close=")">#{dept}</foreach>
+            </if>
+            <if test="scope.office">OR v.status = #{scope.approved}</if>
+            )
+        </if>
+        <include refid="criteria"/>
+        <include refid="withinRetention"/>
+    </sql>
+    <sql id="criteria">
+        <if test="q.from != null">AND v.occurred_on &gt;= #{q.from}</if>
+        <if test="q.to != null">AND v.occurred_on &lt;= #{q.to}</if>
+        <if test="q.classId != null">AND v.class_id = #{q.classId}</if>
+        <if test="q.department != null">AND v.department_code = #{q.department}</if>
+        <if test="q.type != null">AND v.type_code = #{q.type}</if>
+        <if test="q.status != null">AND v.status = #{q.status}</if>
+    </sql>
+    <sql id="withinRetention">
+        <if test="retention.cutoff != null">
+            AND (v.occurred_on &gt; #{retention.cutoff} OR v.status NOT IN
+                <foreach collection="retention.statuses" item="state" open="(" separator="," close=")">#{state}</foreach>
+            )
+        </if>
+    </sql>
+    <select id="byId" resultType="org.example.disciplinaryrecordsmanagement.mapper.ViolationMapper$Row">
+        SELECT <include refid="columns"/> FROM violation_record WHERE id = #{id} AND deleted_at IS NULL
+    </select>
+    <update id="correct">
+        UPDATE violation_record
+        SET occurred_on = #{input.occurredOn}, type_code = #{input.typeCode}, department_code = #{department},
+            status = #{input.status}, handed_back_at = #{handedBackAt,jdbcType=BIGINT},
+            rejection_reason = NULL, appeal_label = #{appealLabel,jdbcType=VARCHAR}, version = version + 1
+        <if test="student != null">
+            , student_id = #{student.id}, student_no = #{student.studentNo}, student_name = #{student.name},
+            class_id = #{student.classId}, class_name = #{student.className}, counselor = #{student.counselor}
+        </if>
+        WHERE id = #{id} AND version = #{input.version} AND deleted_at IS NULL
+    </update>
+    <select id="list" resultType="org.example.disciplinaryrecordsmanagement.mapper.ViolationMapper$Row">
+        SELECT <include refid="columns"/> FROM violation_record v
+        <include refid="filters"/>
+        ORDER BY occurred_on DESC, id DESC LIMIT #{limit} OFFSET #{offset}
+    </select>
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM violation_record v <include refid="filters"/>
+    </select>
+    <select id="exportRows" resultType="org.example.disciplinaryrecordsmanagement.dto.WorkbookRow">
+        SELECT v.occurred_on, v.student_no, v.student_name, v.class_name, v.counselor,
+               d.name AS department_name, t.name AS type_name, v.reason, v.disposition,
+               v.inspection_scope, v.remarks, v.status, v.inspection_label
+        FROM violation_record v JOIN department d ON d.code = v.department_code
+        JOIN violation_type t ON t.code = v.type_code
+        WHERE v.deleted_at IS NULL AND v.status != #{pending}
+        <if test="excluded != null">AND v.status != #{excluded}</if>
+        <include refid="criteria"/>
+        <include refid="withinRetention"/>
+        ORDER BY v.occurred_on DESC, v.id DESC LIMIT #{limit}
+    </select>
+    <sql id="statisticBucket">
+        <choose>
+            <when test="dimension.name() == 'STATUS'">v.status</when>
+            <when test="dimension.name() == 'TYPE'">t.name</when>
+            <when test="dimension.name() == 'DEPARTMENT'">d.name</when>
+            <otherwise>v.class_name</otherwise>
+        </choose>
+    </sql>
+    <select id="statisticsBuckets" resultType="org.example.disciplinaryrecordsmanagement.dto.StatisticsDto$Bucket">
+        SELECT <include refid="statisticBucket"/> AS bucket_key, <include refid="statisticBucket"/> AS label,
+               COUNT(*) AS bucket_count
+        FROM violation_record v JOIN department d ON d.code = v.department_code
+        JOIN violation_type t ON t.code = v.type_code
+        <include refid="filters"/>
+        AND v.status != #{scope.pending}
+        GROUP BY <include refid="statisticBucket"/>
+        ORDER BY bucket_count DESC, bucket_key
+    </select>
+    <select id="statisticsByDay" resultType="org.example.disciplinaryrecordsmanagement.dto.StatisticsDto$Daily">
+        SELECT v.occurred_on, COUNT(*) AS bucket_count
+        FROM violation_record v
+        <include refid="filters"/>
+        AND v.status != #{scope.pending}
+        GROUP BY v.occurred_on ORDER BY v.occurred_on
+    </select>
+</mapper>

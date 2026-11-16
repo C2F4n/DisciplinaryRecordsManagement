@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.disciplinaryrecordsmanagement.mapper.MonthlyReportMapper">
+    <insert id="insertItems">
+        INSERT INTO monthly_report_item(report_id, source_record_id, occurred_on, student_no, student_name, class_name,
+               counselor, department_name, type_name, reason, disposition, inspection_scope, remarks, inspection_label)
+        VALUES
+        <foreach collection="items" item="item" separator=",">
+            (#{reportId}, #{item.sourceRecordId}, #{item.occurredOn}, #{item.studentNo}, #{item.studentName},
+             #{item.className}, #{item.counselor}, #{item.departmentName}, #{item.typeName}, #{item.reason},
+             #{item.disposition}, #{item.inspectionScope}, #{item.remarks}, #{item.inspectionLabel})
+        </foreach>
+    </insert>
+</mapper>

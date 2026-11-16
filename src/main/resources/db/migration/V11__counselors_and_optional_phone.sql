@@ -1,0 +1,11 @@
+CREATE TABLE counselor (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(80) NOT NULL UNIQUE
+);
+
+INSERT INTO counselor (name)
+SELECT DISTINCT TRIM(counselor)
+FROM class_group
+WHERE TRIM(counselor) <> '';
+
+ALTER TABLE student MODIFY COLUMN phone VARCHAR(20) NULL;
