@@ -1,8 +1,37 @@
-HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+# Build outputs and packaged releases
+/target/
+/dist/
+/frontend/dist/
+/frontend/node_modules/
+*.jar
+*.zip
+
+# Local configuration, certificates and credentials
+.env
+.env.*
+!.env.example
+.https/
+.smtp-settings.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.key
+*.pem
+
+# Logs and database exports
+/logs/
+*.log
+*.log.*
+/backup/
+/backups/
+*.dump
+*.sql.gz
+*.sql
+!/src/**/*.sql
+
+# Generated Spring Initializr help
+/HELP.md
 
 ### STS ###
 .apt_generated
@@ -15,6 +44,7 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
+/.run/
 *.iws
 *.iml
 *.ipr
@@ -22,7 +52,6 @@ target/
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
-/dist/
 /nbdist/
 /.nb-gradle/
 build/
@@ -31,13 +60,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-/frontend/node_modules/
-/frontend/dist/
-/.env
-/.https/
-/.smtp-settings.key
-/frontend/.env.local
-/frontend/.env.*.local
-/logs/
-/dist/

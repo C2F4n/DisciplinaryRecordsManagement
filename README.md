@@ -111,7 +111,7 @@ APP_ADMIN_USERNAME=admin
 APP_ADMIN_PASSWORD=你的网页管理员初始密码
 ```
 
-从 `.env` 所在目录启动时会读取这些配置。首次连接空库，Flyway 自动建表并写入基础配置。系统根据 `APP_ADMIN_*` 创建网页管理员。部署包可双击「启动系统.cmd」；完整步骤与常见问题见 [部署教程](./部署教程.md)。
+从 `.env` 所在目录启动时会读取这些配置。首次连接空库，Flyway 自动建表并写入基础配置。系统根据 `APP_ADMIN_*` 创建网页管理员。部署包可双击「启动系统.cmd」。完整步骤与常见问题见 [部署教程](./deploy/部署教程.md)。
 
 `.env` 按 properties 语法解析：值一律用 ASCII、不加引号，中文只能写在注释里。`APP_ADMIN_PASSWORD` 不合规时，空库首启会直接退出（日志提示「密码须为 6–18 个字符」）。`DB_URL` 末尾的 `connectionTimeZone` 不要删，否则日期会随时区偏移。
 
@@ -130,8 +130,6 @@ $env:APP_ADMIN_PASSWORD = '你的管理员密码'
 ```
 
 已有 Maven 时，也可以用 `mvn.cmd spring-boot:run`。首次启动会创建唯一的核心管理员。登录名须以小写字母开头，至少 4 个字符。正式密码为 6–18 个字符，至少包含一个英文字母和一个数字，只允许英文字母、数字、`_` 和 `@`，区分大小写。仅监听本机时，六位纯数字初始密码按 24 小时有效的临时密码处理，登录后须改密。创建完成后可清除 `APP_ADMIN_*` 环境变量，重启会使用数据库中当前的密码。Vue 开发代理默认转发到 18643；如果通过 `APP_PORT` 改了后端端口，再用 `API_PROXY_TARGET` 指向新地址。
-
-也可在 IntelliJ IDEA 顶部运行配置里选择「启动系统」，点击绿色三角。该配置运行 `spring-boot:run`。
 
 新开一个终端启动前端：
 
@@ -171,3 +169,8 @@ npm.cmd run dev
 - 手工打包：先构建前端，再在根目录运行 `mvnw.cmd clean package`。Maven 会把 `frontend/dist` 放进 Jar。保留上面的数据库环境变量，运行 `java -jar target/DisciplinaryRecordsManagement-0.0.1-SNAPSHOT.jar` 即可由 Spring Boot 同时提供页面和 API。
 - **代码风格**：`mvn spotless:apply` 统一 import 顺序并删除无用 import，`mvn spotless:check` 做校验；缩进与换行由 `.editorconfig` 约定。项目不使用通配符 import。
 - 正式部署前使用 HTTPS（学院网关或 Spring Boot 证书皆可），设置 `SESSION_COOKIE_SECURE=true`，限制数据库访问来源，并核对数据保留和备份恢复策略。不要把测试数据混进正式库。
+
+## Git 提交范围
+
+- 提交后端和测试源码、Flyway 升级 SQL、前端源码与依赖锁文件、Maven 构建文件、`.env.example`、部署脚本和说明文档。
+- `.gitignore` 屏蔽开发机配置、证书和密钥、数据库备份、日志及生成目录。提交前用 `git status --short` 和 `git diff --cached --stat` 核对选中的文件。
